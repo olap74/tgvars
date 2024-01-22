@@ -34,8 +34,8 @@ def convert(file, env, bucket, path, s3_client):
 
 @click.command()
 @click.option('--path', envvar='HCL2JSON_PATH', default="", required=False, help="Path to hcl files")
-@click.option('--env', envvar='HCL2JSON_ENV', default="dev", required=False, help="AWS Profile")
-@click.option('--bucket', envvar='HCL2JSON_BUCKET', default="spt-terragrunt-vars", required=False, help="Variables bucket")
+@click.option('--env', envvar='HCL2JSON_ENV', default="default", required=False, help="AWS Profile")
+@click.option('--bucket', envvar='HCL2JSON_BUCKET', default="terragrunt-vars", required=False, help="Variables bucket")
 def main(path, env, bucket):
 
     session = boto3.Session(profile_name=env)
