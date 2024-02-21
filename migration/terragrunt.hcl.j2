@@ -1,0 +1,19 @@
+include {
+  path = find_in_parent_folders()
+}
+
+locals {
+  account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl")){% for key, value in vars.items() %}
+  {{key}} = {{value}}{% endfor %}
+}
+
+terraform {
+  source = "{{ source }}"
+}
+
+inputs = merge({% for key, value in vars.items() %}
+  local.{{key}}.locals,{% endfor %}
+  {% if extra_vars is defined and extra_vars|length > 0 %}{
+  {% for var_line in extra_vars %}  {{ var_line }}
+  {% endfor %}}{% endif %}
+)
